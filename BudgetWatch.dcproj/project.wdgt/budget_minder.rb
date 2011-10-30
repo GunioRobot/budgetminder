@@ -2,7 +2,7 @@ require "rubygems"
 require "google_spreadsheet"
 
 class BudgetMinder
-  
+
   def initialize
     session = GoogleSpreadsheet.login(*user_and_pass)
     spreadsheet = session.spreadsheets("title" => "BudgetMinder").first
@@ -19,51 +19,51 @@ class BudgetMinder
   def current_value
     ws[2, 1]
   end
-  
+
   def clear
-    2.upto(ws.num_rows) do |row| 
+    2.upto(ws.num_rows) do |row|
       ws[row, 2] = ''
       ws[row, 3] = ''
     end
     ws.synchronize
   end
-  
+
   def budget
     ws[2, 4]
   end
-  
+
   def budget=(value)
     ws[2, 4] = value
     ws.synchronize
   end
-  
+
   def remaining
     ws[2, 5]
   end
-  
+
   def cycle_end_date
     ws[2, 6]
   end
-  
+
   def cycle_end_date=(value)
     ws[2, 6] = value
   end
-  
+
   def save
     ws.synchronize
   end
-  
+
   def days_until_end_of_cycle
     (Date.parse(cycle_end_date) - Date.today).to_i
   end
-  
+
   def percent_used
     ws[2, 7]
   end
-  
+
   private
   attr_reader :ws
-  
+
   def parse(lookup, pattern)
     $1 if lookup.find { |s| s =~ pattern }
   end

@@ -2,13 +2,13 @@ require 'budget_minder'
 
 minder = BudgetMinder.new
 
-def hash_arg(arg) 
+def hash_arg(arg)
   Hash[*(arg.split('='))]
 end
 
 action = ARGV[0]
 if 'expense' == action
-  minder.add_expense(ARGV[1]) if ARGV[1]	
+  minder.add_expense(ARGV[1]) if ARGV[1]
 elsif 'update' == action
   args = hash_arg(ARGV[1]).merge(hash_arg(ARGV[2]))
   puts args.to_yaml
